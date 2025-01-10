@@ -16,17 +16,18 @@ interface Props {
     title?: string;
     children: ReactNode;
     back?: boolean;
+    style?: object;
 }
 
 const ContainerComponent = (props: Props) => {
-    
-    const {isImageBackgournd, isScroll, title, children, back} = props;
-    
+
+    const { isImageBackgournd, isScroll, title, children, back, style } = props;
+
     const navigation: any = useNavigation();
 
     const headerComponent = () => {
         return (
-            <View style={{flex: 1, paddingTop: 30}}>
+            <View style={{ flex: 1, paddingTop: 30, ...style }}>
                 {(title || back) && (
                     <RowComponent
                         styles={{
@@ -40,7 +41,7 @@ const ContainerComponent = (props: Props) => {
                         {back && (
                             <TouchableOpacity
                                 onPress={() => navigation.goBack()}
-                                style={{marginRight: 12}}
+                                style={{ marginRight: 12 }}
                             >
                                 <ArrowLeft size={24} color={appColors.text} />
                             </TouchableOpacity>
@@ -63,20 +64,20 @@ const ContainerComponent = (props: Props) => {
     }
 
     const returnContainer = isScroll ? (
-        <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
             {children}
         </ScrollView>
     ) : (
-        <View style={{flex: 1}}>{children}</View>
+        <View style={{ flex: 1 }}>{children}</View>
     )
 
     return isImageBackgournd ? (
         <ImageBackground
             source={require('../assets/images/splash-img.png')}
-            style={{flex: 1}}
-            imageStyle={{flex: 1}}
+            style={{ flex: 1 }}
+            imageStyle={{ flex: 1 }}
         >
-            <SafeAreaView style={{flex: 1}}>{headerComponent()}</SafeAreaView>
+            <SafeAreaView style={{ flex: 1 }}>{headerComponent()}</SafeAreaView>
         </ImageBackground>
     ) : (
         <SafeAreaView style={[globalStyles.container]}>

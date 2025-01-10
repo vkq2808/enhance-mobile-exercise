@@ -4,7 +4,7 @@ import { Button, Text, View } from "react-native"
 const HomeScreen = ({ navigation }: any) => {
 
     const logout = async () => {
-        await AsyncStorage.removeItem('accessToken')
+        await AsyncStorage.removeItem('userToken')
         console.log('Logout succeed')
         navigation.navigate('AuthNavigator', { screen: 'LoginScreen' })
     }

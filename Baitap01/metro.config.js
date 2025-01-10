@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
-=======
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
->>>>>>> ec8c59a (Bài tập 01 - Giới thiệu bản thân)
 
 /**
  * Metro configuration
@@ -10,7 +6,6 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
  *
  * @type {import('metro-config').MetroConfig}
  */
-<<<<<<< HEAD
 module.exports = (async () => {
   const defaultConfig = await getDefaultConfig(__dirname);
 
@@ -26,8 +21,3 @@ module.exports = (async () => {
 
   return mergeConfig(defaultConfig, config);
 })();
-=======
-const config = {};
-
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
->>>>>>> ec8c59a (Bài tập 01 - Giới thiệu bản thân)

@@ -5,6 +5,7 @@ import { ButtonComponent, ContainerComponent, InputComponent, RowComponent, Sect
 import { Lock, Sms } from "iconsax-react-native";
 import { appColors } from "../../constants/appColors";
 import { Validate } from "../../utils/validate";
+import { appInfo } from "../../constants/appInfo";
 
 const LoginScreen = ({ navigation }: any) => {
 
@@ -27,9 +28,39 @@ const LoginScreen = ({ navigation }: any) => {
     }, [email, password])
 
     const login = async () => {
-        await AsyncStorage.setItem('accessToken', 'Quoc')
-        navigation.navigate('MainNavigator')
-    }
+        try {
+            const response = await fetch(`${appInfo.API_URL}/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            // Nếu kết quả trả về ok, chuyển hướng người dùng
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Đăng nhập thành công:', data);
+                // Lưu token vào AsyncStorage nếu cần
+                if (data.token) {
+                    await AsyncStorage.setItem('userToken', data.token);
+                }
+                // Nếu có yêu cầu chuyển hướng dựa theo kết quả (ví dụ, nếu changeEmail là true thì chuyển OTP)
+                if (data.changeEmail === true) {
+                    navigation.navigate('AuthNavigator', { screen: 'OTP' });
+                } else {
+                    navigation.navigate('MainNavigator');
+                }
+            } else {
+                const errorData = await response.json();
+                console.error('Đăng nhập thất bại:', errorData);
+                // Bạn có thể hiển thị thông báo lỗi cho người dùng ở đây
+            }
+        } catch (error) {
+            console.error('Lỗi mạng hoặc server:', error);
+            // Xử lý lỗi mạng nếu cần
+        }
+    };
 
     return (
         <ContainerComponent isImageBackgournd isScroll>

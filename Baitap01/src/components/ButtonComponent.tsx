@@ -16,11 +16,12 @@ interface Props {
     textFont?: string;
     onPress?: () => void;
     iconFlex?: 'right' | 'left'
-    disable?: boolean
+    disable?: boolean,
+    style?: any
 }
 
 const ButtonComponent = (props: Props) => {
-    
+
     const {
         icon,
         text,
@@ -32,11 +33,12 @@ const ButtonComponent = (props: Props) => {
         onPress,
         iconFlex,
         type,
-        disable
+        disable,
+        style
     } = props
 
     return type === 'primary' ? (
-        <View style={{alignItems: 'center'}}>
+        <View style={{ alignItems: 'center', ...style }}>
             <TouchableOpacity
                 disabled={disable}
                 onPress={onPress}
